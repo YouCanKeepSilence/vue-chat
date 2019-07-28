@@ -41,7 +41,7 @@
 
   .message {
     padding: 1rem;
-    width: 60%;
+    width: 35%;
     margin 0 1 rem;
     box-shadow 0 1px 0 0 rgba(50, 50, 50, 0.3);
     border-radius: 4px;
