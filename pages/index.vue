@@ -7,26 +7,129 @@
     <v-flex
       xs12
       sm8
-      md6
+      md8
+      xl6
     >
-      <v-btn @click="sendMessage">Send</v-btn>
+      <!--      <v-btn @click="sendMessage">Send</v-btn>-->
+      <v-card
+        flat
+        min-width="350px"
+      >
+        <v-card-title>
+          <h3>Чатик</h3>
+        </v-card-title>
+        <v-card-text>
+          <v-form
+            ref="form"
+            v-model="valid"
+            lazy-validation
+          >
+            <v-text-field
+              v-model="name"
+              :counter="20"
+              :rules="nameRules"
+              label="Имя"
+              required
+            ></v-text-field>
 
+            <v-text-field
+              v-model="room"
+              :rules="roomRules"
+              label="Комната"
+              required
+            ></v-text-field>
+
+            <!--TODO add room selector and random room id and connect to mongo-->
+            <v-checkbox
+              v-model="checkbox"
+              :rules="[v => !!v || 'Необходимо принять условия!']"
+              label="Согласны с условиями?"
+              required
+            ></v-checkbox>
+
+            <v-card-actions>
+              <v-btn
+                flat
+                :disabled="!valid"
+                color="primary"
+                @click="submit"
+              >
+                Войти
+              </v-btn>
+
+              <v-btn
+                flat
+                color="warning"
+                @click="reset"
+              >
+                Сбросить
+              </v-btn>
+
+              <v-spacer></v-spacer>
+
+              <v-btn icon @click="show = !show">
+                <v-icon>{{ show ? 'keyboard_arrow_down' : 'keyboard_arrow_up' }}</v-icon>
+              </v-btn>
+            </v-card-actions>
+
+          </v-form>
+          <v-flex>
+          <v-slide-y-transition>
+            <div v-show="show">
+            <!--TODO make it to not expand card-->
+              *тут описаны условия*
+            </div>
+          </v-slide-y-transition>
+          </v-flex>
+        </v-card-text>
+      </v-card>
     </v-flex>
   </v-layout>
 </template>
 
 <script>
+  import {mapMutations} from 'vuex';
+  export default {
+    layout: 'empty',
+    head: {
+      title: 'О дивный новый чат'
+    },
+    sockets: {
+      connect: function() {
+        console.log('Client socket connected')
+      }
+    },
+    data: () => ({
+      valid: true,
+      name: '',
+      show: false,
+      nameRules: [
+        v => !!v || 'Необходимо ввести имя',
+        v => (v && v.length <= 20) || 'Имя не должно превышать 20 символов'
+      ],
+      room: '',
+      roomRules: [
+        v => !!v || 'Необходимо ввести комнату'
+      ],
+      checkbox: false
+    }),
 
-export default {
-  sockets: {
-    connect: function() {
-      console.log('Client socket connected');
-    }
-  },
-  methods: {
-    sendMessage() {
-      this.$socket.emit('message', {'text': 'Hello server'});
+    methods: {
+      ...mapMutations(['setUser']),
+      submit() {
+        if (this.$refs.form.validate()) {
+          this.snackbar = true
+          const user = {
+            name: this.name,
+            room: this.room
+          }
+          this.setUser(user);
+          this.$router.push('/chat')
+        }
+      },
+      reset() {
+        this.$refs.form.reset()
+      }
     }
   }
-}
 </script>

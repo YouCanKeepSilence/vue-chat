@@ -8,7 +8,7 @@ socket.on('connection', sock => {
   sock.on('message', data => {
     console.log('Message form client: ', data)
     setTimeout(() => {
-      sock.emit('newMessage', 'Hello, client')
+      sock.emit('newMessage', {'text': 'Hello, client'})
     }, 1000)
   })
 })
