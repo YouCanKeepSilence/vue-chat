@@ -1,6 +1,7 @@
 <template>
   <v-app app>
     Placheholder
+    <nuxt/>
   </v-app>
 </template>
 
