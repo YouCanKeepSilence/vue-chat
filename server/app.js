@@ -17,8 +17,10 @@ socket.on('connection', sock => {
     if (!user.name || !user.room) {
       return callback({'ok': false, 'error': 'Некоректные данные'});
     }
+    sock.join(user.room);
     callback({'ok': true, userId: sock.id});
-    sock.emit('newMessage', m('admin', `Добро пожаловать, ${user.name}`));
+    sock.emit('newMessage', m('admin', `Добро пожаловать, ${user.name}.`));
+    sock.broadcast.to(user.room).emit('newMessage', m('admin', `${user.name} присоеденился.`))
   });
 
 })

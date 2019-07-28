@@ -1,6 +1,6 @@
 <template>
   <v-app app dark>
-    <v-navigation-drawer app v-model="drawer">
+    <v-navigation-drawer app v-model="drawer" mobile-break-point="650">
       <v-list subheader>
         <v-subheader>Люди в комнате</v-subheader>
         <v-list-tile
@@ -30,7 +30,7 @@
       <v-toolbar-title>Вы находитесь в комнате {{user.room}}</v-toolbar-title>
     </v-toolbar>
     <v-content>
-      <div>
+      <div style="height: 100%">
         <nuxt/>
       </div>
     </v-content>
