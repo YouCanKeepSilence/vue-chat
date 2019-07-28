@@ -123,8 +123,16 @@
             name: this.name,
             room: this.room
           }
-          this.setUser(user);
-          this.$router.push('/chat')
+
+          this.$socket.emit('addUser', user, (data) => {
+            if (!data.ok) {
+              console.error(data.error);
+            } else {
+              user.id = data.userId;
+              this.setUser(user);
+              this.$router.push('/chat')
+            }
+          });
         }
       },
       reset() {

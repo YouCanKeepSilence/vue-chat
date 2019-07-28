@@ -17,5 +17,8 @@ export const mutations = {
   clearData(state) {
     state.user = {};
     state.messages = [];
+  },
+  SOCKET_newMessage(state, message) {
+    state.messages.push(message);
   }
 }
