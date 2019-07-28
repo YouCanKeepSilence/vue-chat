@@ -13,6 +13,15 @@ socket.on('connection', sock => {
     }, 1000)
   });
 
+  sock.on('newMessage', (message, callback) => {
+    if (!message.name || !message.id || !message.text) {
+      return callback({'ok': false, error: 'Некорректные данные'})
+    }
+    sock.emit('newMessage', m(message.name, message.text, message.id));
+    sock.broadcast.to(message.room).emit('newMessage', m(message.name, message.text, message.id))
+    return callback({ok: true})
+  })
+
   sock.on('addUser', (user, callback) => {
     if (!user.name || !user.room) {
       return callback({'ok': false, 'error': 'Некоректные данные'});

@@ -2,21 +2,24 @@
   <div class="c-wrap">
     <div class="c-chat">
 
-        <message v-for="m in messages" :key="m.text" :name="m.name" :text="m.text" :isOwner="true"> </message>
+        <message v-for="m in messages" :key="m.text" :name="m.name" :text="m.text" :isOwner="user.id === m.id"> </message>
 
     </div>
     <div class="c-form">
+      <chat-form></chat-form>
     </div>
   </div>
 </template>
 
 <script>
   import {mapState} from 'vuex';
-  import Message from '@/components/message';
+  import Message from '../components/Message';
+  import ChatForm from '../components/ChatForm'
+
 
   export default {
     name: 'chat',
-    components: {Message},
+    components: { ChatForm, Message},
     head() {
       return {
         title: `Комната ${this.user.room}`
