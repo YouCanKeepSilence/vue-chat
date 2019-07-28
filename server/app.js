@@ -1,6 +1,7 @@
 const app = require('express')();
 const http = require('http').createServer(app);
 const socket = require('socket.io')(http);
+const usersList = require('./users')();
 
 const m = (name, text, id) => ({name, text, id})
 
@@ -14,12 +15,19 @@ socket.on('connection', sock => {
   });
 
   sock.on('newMessage', (message, callback) => {
-    if (!message.name || !message.id || !message.text) {
+    if (!message.id || !message.text) {
       return callback({'ok': false, error: 'Некорректные данные'})
     }
-    sock.emit('newMessage', m(message.name, message.text, message.id));
-    sock.broadcast.to(message.room).emit('newMessage', m(message.name, message.text, message.id))
-    return callback({ok: true})
+
+    const user = usersList.get(message.id);
+    if (user) {
+      socket.to(user.room).emit('newMessage', m(message.name, message.text, message.id))
+      return callback({ok: true})
+    } else {
+      return callback({ok: false, error: `Не удалось найти пользователя с id ${message.id}`})
+    }
+
+
   })
 
   sock.on('addUser', (user, callback) => {
@@ -27,6 +35,12 @@ socket.on('connection', sock => {
       return callback({'ok': false, 'error': 'Некоректные данные'});
     }
     sock.join(user.room);
+    usersList.remove(sock.id)
+    usersList.add({
+      id: sock.id,
+      name: user.name,
+      room: user.room
+    });
     callback({'ok': true, userId: sock.id});
     sock.emit('newMessage', m('admin', `Добро пожаловать, ${user.name}.`));
     sock.broadcast.to(user.room).emit('newMessage', m('admin', `${user.name} присоеденился.`))

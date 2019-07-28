@@ -2,7 +2,7 @@
   <div class="c-wrap">
     <div class="c-chat">
 
-        <message v-for="m in messages" :key="m.text" :name="m.name" :text="m.text" :isOwner="user.id === m.id"> </message>
+        <message v-for="m, index in messages" :key="index" :name="m.name" :text="m.text" :isOwner="user.id === m.id"> </message>
 
     </div>
     <div class="c-form">
