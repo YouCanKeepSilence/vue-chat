@@ -39,67 +39,24 @@
     flex-direction column;
   }
 
-  @media screen and (min-width: 1000px)  {
-    .message {
-      padding: 1rem;
-      width: 45%;
-      margin 0 1rem;
-      box-shadow 0 1px 0 0 rgba(50, 50, 50, 0.3);
-      border-radius: 4px;
-      background #1976d2;
-      margin-bottom 1rem;
-      p {
-        margin-bottom: 0;
-      }
-    }
-  }
-
-  @media screen and (min-width: 800px) and (max-width: 1000px) {
-    .message {
-      padding: 1rem;
-      width: 55%;
-      margin 0 1rem;
-      box-shadow 0 1px 0 0 rgba(50, 50, 50, 0.3);
-      border-radius: 4px;
-      background #1976d2;
-      margin-bottom 1rem;
-      p {
-        margin-bottom: 0;
-      }
-    }
-  }
-
-  @media screen and (min-width: 500px) and (max-width: 800px) {
-    .message {
-      padding: 1rem;
-      width: 65%;
-      margin 0 1rem;
-      box-shadow 0 1px 0 0 rgba(50, 50, 50, 0.3);
-      border-radius: 4px;
-      background #1976d2;
-      margin-bottom 1rem;
-      p {
-        margin-bottom: 0;
-      }
-    }
-  }
-
-  @media screen and (min-width: 300px) and (max-width: 500px) {
-    .message {
-      padding: 1rem;
-      width: 80%;
-      margin 0 1rem;
-      box-shadow 0 1px 0 0 rgba(50, 50, 50, 0.3);
-      border-radius: 4px;
-      background #1976d2;
-      margin-bottom 1rem;
-      p {
-        margin-bottom: 0;
-      }
-    }
-  }
-
-
+  .message
+    for i in 0...20
+      @media screen and (min-width: 300px * i) and (max-width: 300px * (i + 1) + 200px)
+        if i <= 1
+          width: 85%
+        else if i > 5
+          width: 35%
+        else
+          width: (100 / (i - 0.5)) %
+        padding: 1rem;
+        margin 0 1rem;
+        box-shadow 0 1px 0 0 rgba(50, 50, 50, 0.3);
+        border-radius: 4px;
+        background #1976d2;
+        margin-bottom 1rem;
+        p {
+          margin-bottom: 0;
+        }
 
 
   .isOwner {
