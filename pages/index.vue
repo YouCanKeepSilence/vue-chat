@@ -6,7 +6,7 @@
   >
     <v-snackbar
       v-model="snackbar"
-      color="cyan darken-2"
+      :color="snackbarColor"
       multi-line
       right
       :timeout="timeout"
@@ -118,6 +118,7 @@
     },
     data: () => ({
       snackbar: false,
+      snackbarColor: '',
       valid: true,
       name: '',
       show: false,
@@ -135,9 +136,19 @@
     }),
     mounted() {
       const message = this.$route.query.message
-      if (message) {
-        this.message = message;
-        this.snackbar = true
+      switch (message) {
+        case 'noUser':
+          this.message = 'Необходимо авторизироваться';
+          this.snackbarColor = 'error';
+          this.snackbar = true
+          this.$router.push('/')
+          break;
+        case 'leftChat':
+          this.message = 'Вышли из комнаты';
+          this.snackbarColor = 'cyan darken-2';
+          this.snackbar = true
+          this.$router.push('/')
+          break;
       }
     },
     methods: {
