@@ -21,7 +21,7 @@ class Users {
   }
 
   getUsersByRoom(roomId) {
-    this.users.filter(user => user.room === roomId);
+    return this.users.filter(user => user.room === roomId);
   }
 
 }

@@ -44,7 +44,25 @@ socket.on('connection', sock => {
     callback({'ok': true, userId: sock.id});
     sock.emit('newMessage', m('admin', `Добро пожаловать, ${user.name}.`));
     sock.broadcast.to(user.room).emit('newMessage', m('admin', `${user.name} присоеденился.`))
+    socket.to(user.room).emit('updateUsers', usersList.getUsersByRoom(user.room));
   });
+
+  sock.on('userLeft', (id, callback) => {
+    const user = usersList.remove(id);
+    if (user) {
+      socket.to(user.room).emit('updateUsers', usersList.getUsersByRoom(user.room));
+      socket.to(user.room).emit('newMessage', m('admin', `Пользователь ${user.name} вышел.`));
+    }
+    callback();
+  });
+
+  sock.on('disconnect', () => {
+    const user = usersList.remove(sock.id);
+    if (user) {
+      socket.to(user.room).emit('updateUsers', usersList.getUsersByRoom(user.room));
+      socket.to(user.room).emit('newMessage', m('admin', `Пользователь ${user.name} вышел.`));
+    }
+  })
 
 })
 

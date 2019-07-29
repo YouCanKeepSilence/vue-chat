@@ -43,10 +43,10 @@
             <v-checkbox
               v-model="checkbox"
               :rules="[v => !!v || 'Необходимо принять условия!']"
-              label="Согласны с условиями?"
+              label="Согласен с условиями"
               required
+              dark
             ></v-checkbox>
-
             <v-card-actions>
               <v-btn
                 flat
