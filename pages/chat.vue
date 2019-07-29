@@ -1,8 +1,13 @@
 <template>
   <div class="c-wrap">
-    <div class="c-chat">
+    <div class="c-chat" ref="block">
 
-        <message v-for="(m, index) in messages" :key="index" :name="m.name" :text="m.text" :isOwner="user.id === m.id"> </message>
+        <message v-for="(m, index) in messages"
+                 :key="index"
+                 :name="m.name"
+                 :text="m.text"
+                 :isOwner="user.id === m.id">
+        </message>
 
     </div>
     <div class="c-form">
@@ -23,6 +28,13 @@
     head() {
       return {
         title: `Комната ${this.user.room}`
+      }
+    },
+    watch: {
+      messages() {
+        setTimeout( () => {
+          this.$refs.block.scrollTop = this.$refs.block.scrollHeight;
+        }, 0);
       }
     },
     middleware: ['chat'],
