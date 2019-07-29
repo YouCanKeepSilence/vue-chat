@@ -4,6 +4,23 @@
     justify-center
     align-center
   >
+    <v-snackbar
+      v-model="snackbar"
+      color="cyan darken-2"
+      multi-line
+      right
+      :timeout="timeout"
+      top
+    >
+      {{ message }}
+      <v-btn
+        flat
+        text
+        @click="snackbar = false"
+      >
+        Close
+      </v-btn>
+    </v-snackbar>
     <v-flex
       xs12
       sm8
@@ -100,6 +117,7 @@
       }
     },
     data: () => ({
+      snackbar: false,
       valid: true,
       name: '',
       show: false,
@@ -111,14 +129,21 @@
       roomRules: [
         v => !!v || 'Необходимо ввести комнату'
       ],
-      checkbox: false
+      checkbox: false,
+      message: '',
+      timeout: 6000
     }),
-
+    mounted() {
+      const message = this.$route.query.message
+      if (message) {
+        this.message = message;
+        this.snackbar = true
+      }
+    },
     methods: {
       ...mapMutations(['setUser']),
       submit() {
         if (this.$refs.form.validate()) {
-          this.snackbar = true
           const user = {
             name: this.name,
             room: this.room

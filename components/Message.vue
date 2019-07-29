@@ -39,19 +39,68 @@
     flex-direction column;
   }
 
-  .message {
-    padding: 1rem;
-    width: 35%;
-    margin 0 1 rem;
-    box-shadow 0 1px 0 0 rgba(50, 50, 50, 0.3);
-    border-radius: 4px;
-    background #1976d2;
-    margin-bottom 1rem;
-
-    p {
-      margin-bottom: 0;
+  @media screen and (min-width: 1000px)  {
+    .message {
+      padding: 1rem;
+      width: 45%;
+      margin 0 1rem;
+      box-shadow 0 1px 0 0 rgba(50, 50, 50, 0.3);
+      border-radius: 4px;
+      background #1976d2;
+      margin-bottom 1rem;
+      p {
+        margin-bottom: 0;
+      }
     }
   }
+
+  @media screen and (min-width: 800px) and (max-width: 1000px) {
+    .message {
+      padding: 1rem;
+      width: 55%;
+      margin 0 1rem;
+      box-shadow 0 1px 0 0 rgba(50, 50, 50, 0.3);
+      border-radius: 4px;
+      background #1976d2;
+      margin-bottom 1rem;
+      p {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  @media screen and (min-width: 500px) and (max-width: 800px) {
+    .message {
+      padding: 1rem;
+      width: 65%;
+      margin 0 1rem;
+      box-shadow 0 1px 0 0 rgba(50, 50, 50, 0.3);
+      border-radius: 4px;
+      background #1976d2;
+      margin-bottom 1rem;
+      p {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  @media screen and (min-width: 300px) and (max-width: 500px) {
+    .message {
+      padding: 1rem;
+      width: 80%;
+      margin 0 1rem;
+      box-shadow 0 1px 0 0 rgba(50, 50, 50, 0.3);
+      border-radius: 4px;
+      background #1976d2;
+      margin-bottom 1rem;
+      p {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+
+
 
   .isOwner {
     background: white;
